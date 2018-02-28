@@ -1505,8 +1505,8 @@ function link_url_type($text) {
 
   $link_ichars = $link_ichars_domain . (string) html_entity_decode(implode("", array(
       // ß.
-      "&#x00DF;",
-    )), ENT_QUOTES, 'UTF-8');
+    "&#x00DF;",
+  )), ENT_QUOTES, 'UTF-8');
   $allowed_protocols = variable_get('filter_allowed_protocols', array(
     'http',
     'https',
@@ -1600,14 +1600,14 @@ function link_content_migrate_field_alter(&$field_value, $instance_value) {
     $field_value['type'] = 'link_field';
     // Remove settings that are now on the instance.
     foreach (array(
-               'attributes',
-               'display',
-               'url',
-               'title',
-               'title_value',
-               'enable_tokens',
-               'validate_url',
-             ) as $setting) {
+      'attributes',
+      'display',
+      'url',
+      'title',
+      'title_value',
+      'enable_tokens',
+      'validate_url',
+    ) as $setting) {
       unset($field_value['settings'][$setting]);
     }
   }
@@ -1622,14 +1622,14 @@ function link_content_migrate_instance_alter(&$instance_value, $field_value) {
   if ($field_value['type'] == 'link') {
     // Grab settings that were previously on the field.
     foreach (array(
-               'attributes',
-               'display',
-               'url',
-               'title',
-               'title_value',
-               'enable_tokens',
-               'validate_url',
-             ) as $setting) {
+      'attributes',
+      'display',
+      'url',
+      'title',
+      'title_value',
+      'enable_tokens',
+      'validate_url',
+    ) as $setting) {
       if (isset($field_value['settings'][$setting])) {
         $instance_value['settings'][$setting] = $field_value['settings'][$setting];
       }

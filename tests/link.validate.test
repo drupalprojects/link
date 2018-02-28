@@ -294,6 +294,7 @@ class LinkValidateTest extends LinkValidateTestCase {
     // $this->pass($this->content);.
     // @codingStandardsIgnoreLine
     $this->assertNoText(t('The value %value provided for %field is not a valid URL.', array(
+      // @codingStandardsIgnoreLine
       '%field' => $name,
       '%value' => trim($url),
     )));
