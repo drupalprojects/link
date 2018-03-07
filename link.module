@@ -10,6 +10,7 @@ define('LINK_INTERNAL', 'internal');
 define('LINK_FRONT', 'front');
 define('LINK_EMAIL', 'email');
 define('LINK_NEWS', 'news');
+define('LINK_FILE', 'file');
 define('LINK_TARGET_DEFAULT', 'default');
 define('LINK_TARGET_NEW_WINDOW', '_blank');
 define('LINK_TARGET_TOP', '_top');
@@ -1511,6 +1512,7 @@ function link_url_type($text) {
     'http',
     'https',
     'ftp',
+    'file',
     'news',
     'nntp',
     'telnet',
@@ -1553,6 +1555,8 @@ function link_url_type($text) {
   $user = '[a-zA-Z0-9' . $link_ichars . '_\-\.\+\^!#\$%&*+\/\=\?\`\|\{\}~\'\[\]]+';
   $email_pattern = '/^mailto:' . $user . '@' . '(?:' . $domain . '|' . $ipv4 . '|' . $ipv6 . '|localhost)' . $query . '?$/';
 
+  $file_pattern = "/^(?:file:\/\/)" . "(?:\/?[a-z0-9" . $link_ichars . "_\-\.\\\~+%=&,$'#!():;*@\[\]]*)*" . '$/i';
+
   if (strpos($text, '<front>') === 0) {
     return LINK_FRONT;
   }
@@ -1561,6 +1565,9 @@ function link_url_type($text) {
   }
   if (in_array('news', $allowed_protocols) && preg_match($news_pattern, $text)) {
     return LINK_NEWS;
+  }
+  if (in_array('file', $allowed_protocols) && preg_match($file_pattern, $text, $as)) {
+    return LINK_FILE;
   }
   if (preg_match($internal_pattern . $end, $text)) {
     return LINK_INTERNAL;
