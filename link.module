@@ -1140,14 +1140,14 @@ function theme_link_formatter_link_default($vars) {
   }
   // Display a normal link if both title and URL are available.
   if (!empty($vars['element']['title']) && !empty($vars['element']['url'])) {
-    return l($vars['element']['title'], $vars['element']['url'], $link_options);
+    return l($vars['element']['title'], rawurldecode($vars['element']['url']), $link_options);
   }
   // If only a title, display the title.
   elseif (!empty($vars['element']['title'])) {
     return !empty($link_options['html']) ? $vars['element']['title'] : check_plain($vars['element']['title']);
   }
   elseif (!empty($vars['element']['url'])) {
-    return l($vars['element']['title'], $vars['element']['url'], $link_options);
+    return l($vars['element']['title'], rawurldecode($vars['element']['url']), $link_options);
   }
 }
 
