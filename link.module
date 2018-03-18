@@ -1541,8 +1541,8 @@ function link_url_type($text) {
 
   $directories = "(?:\/[a-z0-9" . $link_ichars . "_\-\.~+%=&,$'#!():;*@\[\]]*)*";
   // Yes, four backslashes == a single backslash.
-  $query = "(?:\/?\?([?a-z0-9" . $link_ichars . "+_|\-\.~\/\\\\%=&,$'!():;*@\[\]{} ]*))";
-  $anchor = "(?:#[a-z0-9" . $link_ichars . "_\-\.~+%=&,$'():;*@\[\]\/\?]*)";
+  $query = "(?:\/?\?([?a-zA-Z0-9" . $link_ichars . "+_|\-\.~\/\\\\%=&,$'!():;*@\[\]{} ]*))";
+  $anchor = "(?:#[a-zA-Z0-9" . $link_ichars . "_\-\.~+%=&,$'():;*@\[\]\/\?]*)";
 
   // The rest of the path for a standard URL.
   // @codingStandardsIgnoreLine
