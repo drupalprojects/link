@@ -1019,6 +1019,9 @@ function link_field_formatter_info() {
       'label' => t('Title, as link (default)'),
       'field types' => array('link_field'),
       'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+      'settings' => array(
+        'custom_title' => '',
+      ),
     ),
     'link_title_plain' => array(
       'label' => t('Title, as plain text'),
@@ -1090,6 +1093,14 @@ function link_field_formatter_settings_form($field, $instance, $view_mode, $form
       '#default_value' => $settings['strip_www'],
     );
   }
+  if ($display['type'] == 'link_default') {
+    $element['custom_title'] = array(
+      '#title' => t('Override title'),
+      '#description' => t('Optionally override the title for the link(s).'),
+      '#type' => 'textfield',
+      '#default_value' => $settings['custom_title'],
+    );
+  }
   return $element;
 }
 
@@ -1108,6 +1119,11 @@ function link_field_formatter_settings_summary($field, $instance, $view_mode) {
       return t('Leave www. in domain');
     }
   }
+  if ($display['type'] == 'link_default') {
+    if ($display['settings']['custom_title']) {
+      return t('Title: %title', array('%title' => $display['settings']['custom_title']));
+    }
+  }
   return '';
 }
 
@@ -1117,6 +1133,9 @@ function link_field_formatter_settings_summary($field, $instance, $view_mode) {
 function link_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $elements = array();
   foreach ($items as $delta => $item) {
+    if (!empty($display['settings']['custom_title'])) {
+      $item['title'] = $display['settings']['custom_title'];
+    }
     $elements[$delta] = array(
       '#theme' => 'link_formatter_' . $display['type'],
       '#element' => $item,
