@@ -1140,7 +1140,9 @@ function link_field_formatter_view($entity_type, $entity, $field, $instance, $la
       '#theme' => 'link_formatter_' . $display['type'],
       '#element' => $item,
       '#field' => $instance,
-      '#display' => $display,
+      '#display' => array(
+        'settings' => $display['settings']
+      ),
     );
   }
   return $elements;
@@ -1243,6 +1245,9 @@ function theme_link_formatter_link_title_plain($vars) {
  */
 function theme_link_formatter_link_url($vars) {
   $link_options = $vars['element'];
+  if (isset($link_options['attributes']['class'])) {
+    $link_options['attributes']['class'] = array($link_options['attributes']['class']);
+  }
   unset($link_options['title']);
   unset($link_options['url']);
   return $vars['element']['url'] ? l($vars['element']['display_url'], $vars['element']['url'], $link_options) : '';
