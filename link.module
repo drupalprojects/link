@@ -1141,7 +1141,7 @@ function link_field_formatter_view($entity_type, $entity, $field, $instance, $la
       '#element' => $item,
       '#field' => $instance,
       '#display' => array(
-        'settings' => $display['settings']
+        'settings' => $display['settings'],
       ),
     );
   }
