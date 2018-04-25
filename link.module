@@ -196,15 +196,18 @@ function link_field_instance_settings_form($field, $instance) {
     '#size' => 3,
   );
 
+  // Target options. E.g. New window = target="_blank".
   $target_options = array(
     LINK_TARGET_DEFAULT => t('Default (no target attribute)'),
     LINK_TARGET_TOP => t('Open link in window root'),
     LINK_TARGET_NEW_WINDOW => t('Open link in new window'),
     LINK_TARGET_USER => t('Allow the user to choose'),
   );
+
   $form['attributes'] = array(
     '#tree' => TRUE,
   );
+
   $form['attributes']['target'] = array(
     '#type' => 'radios',
     '#title' => t('Link Target'),
