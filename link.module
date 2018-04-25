@@ -704,7 +704,7 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
       else {
         $entity_loaded = $entity;
       }
-      $item['attributes']['title'] = token_replace($item['attributes']['title'], array($entity_token_type => $entity_loaded));
+      $item['attributes']['title'] = token_replace($item['attributes']['title'], array($entity_token_type => $entity_loaded), array('clear' => TRUE));
     }
     $item['attributes']['title'] = filter_xss($item['attributes']['title'], array(
       'b',
