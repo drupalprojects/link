@@ -607,7 +607,7 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
     }
   }
   // Use the title defined by the user at the widget level.
-  elseif (drupal_strlen(trim($item['title']))) {
+  elseif (isset($item['title']) && drupal_strlen(trim($item['title']))) {
     $title = $item['title'];
   }
   // Use the static title if a user-defined title is optional and a static title
