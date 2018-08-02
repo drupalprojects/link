@@ -530,6 +530,17 @@ function _link_validate(&$item, $delta, $field, $entity, $instance, $langcode, &
  */
 function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
   // @codingStandardsIgnoreEnd
+  // As this function can be called multiple times and the item is changed by
+  // reference we need to ensure that there's always the original data to
+  // process otherwise processed data are processed again which might leads to
+  // unexpected results.
+  if (isset($item['_link_sanitized'])) {
+    return;
+  }
+
+  // Store a flag to check in case of a second call.
+  $item['_link_sanitized'] = TRUE;
+
   // Don't try to process empty links.
   if (empty($item['url']) && empty($item['title'])) {
     return;
@@ -570,14 +581,13 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
   $url_parts = _link_parse_url($url);
 
   if (!empty($url_parts['url'])) {
-    $item['url'] = url($url_parts['url'],
-      array(
-        'query' => isset($url_parts['query']) ? $url_parts['query'] : NULL,
-        'fragment' => isset($url_parts['fragment']) ? $url_parts['fragment'] : NULL,
-        'absolute' => !empty($instance['settings']['absolute_url']),
-        'html' => TRUE,
-      )
-    );
+    $item = array(
+      'url' => $url_parts['url'],
+      'query' => isset($url_parts['query']) ? $url_parts['query'] : NULL,
+      'fragment' => isset($url_parts['fragment']) ? $url_parts['fragment'] : NULL,
+      'absolute' => !empty($instance['settings']['absolute_url']),
+      'html' => TRUE,
+    ) + $item;
   }
 
   // Create a shortened URL for display.
